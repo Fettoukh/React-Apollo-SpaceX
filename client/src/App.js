@@ -2,6 +2,8 @@ import "./App.css";
 import logo from "./spacex.png";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Launches from "./component/Launches";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Launch from "./component/Launch";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
@@ -11,18 +13,21 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="container">
-        <img
-          src={logo}
-          alt=""
-          style={{
-            width: 300,
-            display: "block",
-            margin: "auto",
-          }}
-        />
-        <Launches />
-      </div>
+      <Router>
+        <div className="container">
+          <img
+            src={logo}
+            alt=""
+            style={{
+              width: 300,
+              display: "block",
+              margin: "auto",
+            }}
+          />
+          <Route exact path="/" component={Launches} />
+          <Route exact path="/launch/:flight_number" component={Launch} />
+        </div>
+      </Router>
     </ApolloProvider>
   );
 }
